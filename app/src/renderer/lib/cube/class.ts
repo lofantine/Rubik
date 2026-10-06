@@ -27,6 +27,7 @@ class Cube {
   public root: Three.Group;
   public cubelets: Three.Group[] = [];
   private materials: Map<Face, Three.MeshBasicMaterial> = new Map();
+  private animationId: number | null;
 
   constructor(size = 3) {
     this.size = size;
@@ -40,9 +41,11 @@ class Cube {
     );
     this.renderer = new Three.WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    
+
     this.root = new Three.Group();
     this.scene.add(this.root);
+    this.animationId = null;
+
 
     this.construct_cube();
   }
@@ -69,7 +72,7 @@ class Cube {
     for (let x = 0; x < this.size; x++) {
       for (let y = 0; y < this.size; y++) {
         for (let z = 0; z < this.size; z++) {
-          
+
           const materials = [
             x === this.size - 1 ? this.materials.get(Face.Right) : internalMaterial,
             x === 0            ? this.materials.get(Face.Left)  : internalMaterial,
@@ -81,10 +84,10 @@ class Cube {
 
           const cubeletRoot = new Three.Group();
           const cubelet = new Three.Mesh(geometry, materials);
-          
+
           // Centrage du cube
           cubelet.position.set(x - offset, y - offset, z - offset);
-          
+
           cubeletRoot.add(cubelet);
           this.root.add(cubeletRoot);
           this.cubelets.push(cubeletRoot);
@@ -118,18 +121,19 @@ class Cube {
   }
 
   public animate = () => {
-    requestAnimationFrame(this.animate);
-    
+    this.animationId = requestAnimationFrame(this.animate);
+
     // Animation de test : rotation automatique du cube entier
     // this.root.rotation.x += 0.005;
     // this.root.rotation.y += 0.005;
-    
+
     this.rotateFace('z', 1, 0.005);
-    
+
     this.renderer.render(this.scene, this.camera);
   };
 
   public drop() {
+    cancelAnimationFrame(this.animationId!);
     this.renderer.dispose();
   }
 }
