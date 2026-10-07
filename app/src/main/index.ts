@@ -29,6 +29,15 @@ const launchWin = () => {
   });
 
   mainWindow.loadFile(path.join(import.meta.dirname, 'renderer', 'index.html'));
+  mainWindow.setResizable(false);
+
+  mainWindow.webContents.on('console-message', (event) => {
+    console.log(`[renderer] ${event.message}`);
+  });
+
+  mainWindow.webContents.openDevTools({ mode: 'detach' }); // fenêtre séparée, pratique vu que la tienne fait 800x600
+
+
 }
 
 app.whenReady().then(() => {
