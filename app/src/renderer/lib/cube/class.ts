@@ -1,8 +1,8 @@
 import * as Three from 'three';
 import { sleep } from '../utils/sleep';
 
-const ANIMATION_TIME_MS = 500;
-const ANIMATION_FRAMES = 100;
+const ANIMATION_TIME_MS = 100;
+const ANIMATION_FRAMES = 20;
 
 enum Face {
   Top,

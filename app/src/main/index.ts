@@ -35,7 +35,7 @@ const launchWin = () => {
     console.log(`[renderer] ${event.message}`);
   });
 
-  mainWindow.webContents.openDevTools({ mode: 'detach' }); // fenêtre séparée, pratique vu que la tienne fait 800x600
+  // mainWindow.webContents.openDevTools({ mode: 'detach' }); // fenêtre séparée, pratique vu que la tienne fait 800x600
 
 
 }
