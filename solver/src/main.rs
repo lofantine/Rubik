@@ -1,6 +1,4 @@
-use ::core::panic;
 use colored::Colorize;
-use std::println;
 
 use clap::Parser;
 use dotenvy::from_filename;
@@ -34,7 +32,8 @@ fn main() {
     println!("{}", " -- Welcome in Rubik solver --".yellow());
 
     let size = args.size.unwrap_or(3);
-    let cube = core::Cube::new(size);
+    let mut cube = core::Cube::new(size);
 
-    cube.print();
+    // cube.print();
+    cube.scramble();
 }

@@ -1,4 +1,6 @@
 mod color_set;
+use rand::distr::{Alphanumeric, SampleString};
+use rand::{ Rng, RngExt, random, random_range };
 use colored::Colorize;
 
 use std::collections::VecDeque;
@@ -222,7 +224,7 @@ impl Cube {
         let maj = _step >= 0;
         _step = _step.abs();
         for _ in 0.._step {
-            print!("{}", if maj {'B'} else {'b'});
+            print!("{}", if maj {'U'} else {'u'});
         }
 
         if step == 0 {
@@ -505,7 +507,27 @@ impl Cube {
                     }
                 }
             }
-        }
+    }
+
+    pub fn scramble(&mut self) -> () {
+        let scbl : i32 = random_range(0..=10);
+        println!("rnadom is {}", scbl);
+        let scbl : i32 = random_range(0..=10);
+        println!("rnadom is {}", scbl);
+        let scbl : i32 = random_range(0..=10);
+        println!("rnadom is {}", scbl);
+
+        // let random_generation : String = rand::rng().sample_iter(&Alphanumeric).take(16).map(char::from).collect();
+        // println!("{:?}", random_generation);
+        // let random_generation : String = Alphanumeric.sample_string(&mut rand::rng(), 16);
+        // println!("{:?}", random_generation);
+        let chars = "FfBbTtUuLlRr".as_bytes();
+        let random_generation : String = (0..50).map(|_| {
+            let random_idx : usize = rand::random_range(0..chars.len());
+            return chars[random_idx] as char;
+        }).collect();
+        println!("->{}", random_generation);
+    }
 }
 
 impl Printable for Cube {
